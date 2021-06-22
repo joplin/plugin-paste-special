@@ -125,6 +125,18 @@ const baseConfig = {
 				use: 'ts-loader',
 				exclude: /node_modules/,
 			},
+			{
+				test: /\.(txt|csv|mmdb)$/,
+				use: [
+				  {
+					loader: 'file-loader',
+					options: {
+					  name: "[path][name].[ext]",
+					  emitFile: true,
+					},
+				  },
+				],
+			},
 		],
 	},
 };
@@ -135,7 +147,7 @@ const pluginConfig = Object.assign({}, baseConfig, {
 		alias: {
 			api: path.resolve(__dirname, 'api'),
 		},
-		extensions: ['.tsx', '.ts', '.js'],
+		extensions: ['.tsx', '.ts', '.js', '.csv'],
 	},
 	output: {
 		filename: 'index.js',
