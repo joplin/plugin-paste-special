@@ -5,18 +5,7 @@
     "dist": "webpack --joplin-plugin-config buildMain && webpack --joplin-plugin-config buildExtraScripts && webpack --joplin-plugin-config createArchive",
     "prepare": "npm run dist",
     "update": "npm install -g generator-joplin && yo joplin --update",
-    "test": "jest"
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ]
+    "test": "ENV_FILE=./config/.env.test jest"
   },
   "license": "MIT",
   "keywords": [
@@ -24,7 +13,8 @@
   ],
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.14.5",
-    "@types/node": "^14.17.4",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^14.0.14",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^6.1.0",
     "fs-extra": "^9.0.1",
@@ -32,6 +22,7 @@
     "jest": "^27.0.5",
     "on-build-webpack": "^0.1.0",
     "tar": "^6.0.5",
+    "ts-jest": "^27.0.3",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.3",
     "webpack": "^4.43.0",
@@ -39,10 +30,8 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
-    "@types/jest": "^26.0.23",
     "csv-to-markdown-table": "^1.1.0",
     "csvtomd-lib": "^0.1.3",
-    "papaparse": "^5.3.1",
-    "ts-jest": "^27.0.3"
+    "papaparse": "^5.3.1"
   }
 }
