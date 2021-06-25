@@ -1,55 +1,50 @@
-import csvToMarkdown from './csvToMarkdown';
+import joplin from 'api';
 import { parse } from 'papaparse';
+const csvToMarkdown = require('./csvToMarkdown');
 
 export const convertCsvToMarkdown = (csv) => {
-	const mdTable = csvToMarkdown(csv.toString(), ',', true);
-	console.info(mdTable);
+	let mdTable: string;
+	mdTable = csvToMarkdown(csv.toString(), ',', true);
 	return mdTable;
-
 }
 
 export const parseCsv = (csv) => {
-	let parsedCsv: any;
-
+	let parsedCsv = undefined;
 	parse(csv, {
 		header: true,
 		complete: (results) => {
-			parsedCsv = results.data;
-			console.info("results: ", parsedCsv);
+			if(!results?.errors?.length) {
+				parsedCsv = results.data;
+			}
 		},
 		error: (err) => {
-			console.info("PapaParse err: ", err);
+			console.info("PapaParse err: ", err[0]?.message);
 		}
 	});
 
 	return parsedCsv;
 }
 
-const csvAsTable = (mode: any) => {
-	let csv: string;
+export async function csvAsTable (mode: string): Promise<void> {
+	let csv, mdTable, parsedCsv: string;
 
 	if(mode === 'paste') {
-		// const clipboardData = await joplin.clipboard.readText()
-		const clipboardData = csv;
-		const readClipboardData = () => {};
-		
-		// if file, not found
-		if(!clipboardData) return;
+		csv = await (joplin as any).clipboard.readText();
+		// if clipboard data, not found
+		if(!csv?.length) return;
 	}
 
 	if(mode === 'import') {
 		csv =`CONTENT TYPE,TITLE,ABBR,ISSN,e-ISSN\nJournals,ACM Computing Surveys ,ACM Comput. Surv.,0360-0300,1557-7341\nJournals,ACM Journal of Computer Documentation ,ACM J. Comput. Doc.,1527-6805,1557-9441\nJournals,ACM Journal on Emerging Technologies in Computing Systems ,J. Emerg. Technol. Comput. Syst.,1550-4832,1550-4840\nJournals,Journal of Data and Information Quality ,J. Data and Information Quality,1936-1955,1936-1963`;
 	}
 
-	let parsedCsv =  parseCsv(csv);
+	parsedCsv =  parseCsv(csv);
 
 	if(!parsedCsv) {
-		alert("Use proper formatted CSV!");
+		console.error("Use proper formatted CSV!");
 		return;
 	}
 
-	const mdTable = convertCsvToMarkdown(csv);
+	mdTable = convertCsvToMarkdown(csv);
 	return mdTable;
 }
-
-export default csvAsTable;

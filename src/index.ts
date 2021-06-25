@@ -1,6 +1,6 @@
 import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
-import csvAsTable from './utils/csvAsTable/csvAsTable';
+import { csvAsTable } from './utils/csvAsTable/csvAsTable';
 
 joplin.plugins.register({
 	onStart: async function() {
@@ -9,14 +9,17 @@ joplin.plugins.register({
             name: 'pasteCsvAsTable',
             label: 'CSV as Table',
             execute: async () => {
-				// return csvAsTable('paste');
+				const pasteCsvAsTable = await csvAsTable('paste');
+				await joplin.commands.execute("insertText", pasteCsvAsTable);
+				await joplin.commands.execute('editor.focus');
 			}
 		});
 		await joplin.commands.register({
             name: 'importCsvAsTable',
             label: 'CSV as Table',
             execute: async () => {
-				await joplin.commands.execute("insertText", csvAsTable('import'));
+				const importCsvAsTable = await csvAsTable('import');
+				await joplin.commands.execute("insertText", importCsvAsTable);
 				await joplin.commands.execute('editor.focus');
 			}
 		}); 

@@ -1,5 +1,4 @@
-import convertCsvToMarkdown from "./csvAsTable";
-import parseCsv from "./csvAsTable";
+import { parseCsv, convertCsvToMarkdown } from './../../utils/csvAsTable/csvAsTable';
 
 test('csvToMarkdown', () => {
   const result = convertCsvToMarkdown("abc\tbcd\tcde");
