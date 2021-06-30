@@ -5,7 +5,7 @@
     "dist": "webpack --joplin-plugin-config buildMain && webpack --joplin-plugin-config buildExtraScripts && webpack --joplin-plugin-config createArchive",
     "prepare": "npm run dist",
     "update": "npm install -g generator-joplin && yo joplin --update",
-    "test": "jest --watchAll --testPathPattern=src/tests"
+    "test": "jest --watchAll --testPathPattern=tests"
   },
   "license": "MIT",
   "keywords": [
@@ -19,7 +19,7 @@
     "copy-webpack-plugin": "^6.1.0",
     "fs-extra": "^9.0.1",
     "glob": "^7.1.6",
-    "jest": "^27.0.5",
+    "jest": "^27.0.6",
     "on-build-webpack": "^0.1.0",
     "tar": "^6.0.5",
     "ts-jest": "^27.0.3",
@@ -30,6 +30,7 @@
     "yargs": "^16.2.0"
   },
   "dependencies": {
+    "ignore-loader": "^0.1.2",
     "papaparse": "^5.3.1"
   }
 }

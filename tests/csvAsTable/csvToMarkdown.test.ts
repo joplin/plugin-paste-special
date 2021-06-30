@@ -1,5 +1,5 @@
 var assert = require('assert');
-var csvToMarkdown = require('../../utils/csvAsTable/csvToMarkdown');
+var csvToMarkdown = require('../../src/utils/csvAsTable/csvToMarkdown');
 
 describe('csvToMarkdown', function () {
 
