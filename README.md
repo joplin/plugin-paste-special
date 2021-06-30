@@ -15,6 +15,12 @@ To build the plugin, simply run `npm run dist`.
 
 The project is setup to use TypeScript, although you can change the configuration to use plain JavaScript.
 
+## Testing the plugin
+
+To test the plugin, simply run `npm test`.
+
+This project is setup to use Jest, for testing purposes.
+
 ## Updating the plugin framework
 
 To update the plugin framework, run `npm run update`.
