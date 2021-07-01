@@ -1,10 +1,8 @@
 import { parse } from 'papaparse';
-const csvToMarkdown = require('./csvToMarkdown');
 
-const parseCsv = (csv) => {
-	let parsedCsv = undefined;
-	parse(csv, {
-		header: true,
+const parseCsv = async (csv) => {
+	let parsedCsv: [] = undefined;
+	await parse(csv, {
 		complete: (results) => {
 			if(!results?.errors?.length) {
 				parsedCsv = results.data;
@@ -14,26 +12,31 @@ const parseCsv = (csv) => {
 			console.info("PapaParse err: ", err[0]?.message);
 		}
 	});
-
+	
 	return parsedCsv;
 }
 
-export const convertCsvToMarkdown = (csv) => {
+const csvToMarkdown = (csvContent): string => {
+	const header = csvContent[0];
+	const rows = csvContent.slice(1);
 	let mdTable: string;
-	mdTable = csvToMarkdown(csv.toString(), ',', true);
-	return mdTable;
+	
+	mdTable = `| ${header.join(" | ")} | `;
+	mdTable = mdTable.concat(`\n| ${header.map(_ => "---").join(" | ")} | `);
+
+	if(rows.length) {
+		rows.forEach(row => {
+				mdTable = mdTable.concat(`\n| ${row.map(e=> e).join(" | ")} | `);
+		});
+	}
+  	return mdTable;
 }
 
-export async function csvAsTable (csv: string) {
-	let mdTable: string, parsedCsv: string;
+export default async function csvAsTable (csv: string) {
+	let mdTable: string, parsedCsv: [];
 
-	parsedCsv =  parseCsv(csv);
+	parsedCsv = await parseCsv(csv);
+	mdTable = csvToMarkdown(parsedCsv);
 
-	if(!parsedCsv) {
-		console.error("Use proper formatted CSV!");
-		return;
-	}
-
-	mdTable = convertCsvToMarkdown(csv);
 	return mdTable;
 }

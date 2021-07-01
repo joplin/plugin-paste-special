@@ -1,8 +1,8 @@
 import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
-import { csvAsTable } from '../utils/csvAsTable/csvAsTable';
+import csvAsTable from '../utils/csvAsTable/csvAsTable';
 
-export async function registerCsvAsTable() {
+export default async function registerCsvAsTable() {
     // Respective command for main button
 		await joplin.commands.register({
             name: 'pasteCsvAsTable',
@@ -11,6 +11,7 @@ export async function registerCsvAsTable() {
 				let csv: string = await (joplin as any).clipboard.readText();
 				// if clipboard data, not found
 				if(!csv?.length) return;
+				csv = csv.trim();
 				const pasteCsvAsTable = await csvAsTable(csv);
 				await joplin.commands.execute("insertText", pasteCsvAsTable);
 				await joplin.commands.execute('editor.focus');

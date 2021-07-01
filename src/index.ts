@@ -1,5 +1,5 @@
 import joplin from 'api';
-import { registerCsvAsTable } from './register/registerCsvAsTable';
+import registerCsvAsTable from './register/registerCsvAsTable';
 
 joplin.plugins.register({
 	onStart: async function() {
