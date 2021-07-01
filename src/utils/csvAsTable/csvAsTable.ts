@@ -17,10 +17,17 @@ const parseCsv = async (csv: string) => {
 }
 
 const csvToMarkdown = (csvContent): string => {
+	// escape pipes and backslashes
+	csvContent.forEach((rows, i) => {
+		rows.forEach((e,j) => {
+			csvContent[i][j] = e.replace(/[|\\]/g,'');
+		});
+	})
+
 	const header = csvContent[0];
 	const rows = csvContent.slice(1);
 	let mdTable: string;
-	
+
 	mdTable = `| ${header.join(" | ")} | `;
 	mdTable = mdTable.concat(`\n| ${header.map(_ => "---").join(" | ")} | `);
 
