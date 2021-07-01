@@ -1,10 +1,10 @@
 import { parse } from 'papaparse';
 
-const parseCsv = async (csv) => {
+const parseCsv = async (csv: string) => {
 	let parsedCsv: [] = undefined;
 	await parse(csv, {
 		complete: (results) => {
-			if(!results?.errors?.length) {
+			if(results?.data) {
 				parsedCsv = results.data;
 			}
 		},
