@@ -29,3 +29,9 @@ test('check if default export returns expected output #5', async () => {
   const result = await csvAsTable(testCase);
   expect(result).toBe("| a |  b |  | \n| --- | --- | --- | \n| b |  c |  d | \n| c |  | \n| c |  d | ");
 });
+
+test('check if default export returns expected output #6', async () => {
+  let testCase = "A,b,c\nCod,e|f,f\nde|\ f, g";
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("| A | b | c | \n| --- | --- | --- | \n| Cod | ef | f | \n| de f |  g | ");
+});

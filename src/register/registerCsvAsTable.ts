@@ -2,7 +2,7 @@ import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
 import csvAsTable from '../utils/csvAsTable/csvAsTable';
 
-export default async function registerCsvAsTable() {
+export default async function registerCsvAsTable(): Promise<void> {
     // Respective command for main button
 		await joplin.commands.register({
             name: 'pasteCsvAsTable',

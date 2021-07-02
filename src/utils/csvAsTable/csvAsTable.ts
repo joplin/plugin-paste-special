@@ -16,16 +16,16 @@ const parseCsv = async (csv: string) => {
 	return parsedCsv;
 }
 
-const csvToMarkdown = (csvContent): string => {
-	// escape pipes and backslashes
-	csvContent.forEach((rows, i) => {
+const csvToMarkdown = (parsedCsv: any[]): string => {
+	// remove pipes and backslashes
+	parsedCsv.forEach((rows, i) => {
 		rows.forEach((e,j) => {
-			csvContent[i][j] = e.replace(/[|\\]/g,'');
+			parsedCsv[i][j] = e.replace(/[|\\]/g,'');
 		});
 	})
 
-	const header = csvContent[0];
-	const rows = csvContent.slice(1);
+	const header = parsedCsv[0];
+	const rows = parsedCsv.slice(1);
 	let mdTable: string;
 
 	mdTable = `| ${header.join(" | ")} | `;
