@@ -1,6 +1,6 @@
 # Paste Special Plugin
 
-This plugin is for pasting formatted text and provide sub-menu options inside it as discussed in various links provided above. The sub-menu will contain options for file formats like Paste Excel or CSV as markdown table.
+This plugin is for pasting formatted text and provide sub-menu options inside it to paste from user clipboard. The sub-menu will contain options for file formats like Paste Excel or CSV as markdown table.
 
 ![Screen-Recording-2021-07-05-at-3](https://user-images.githubusercontent.com/35633575/124400631-7a55fb00-dd41-11eb-8ac0-dc1503438a6c.gif)
 
