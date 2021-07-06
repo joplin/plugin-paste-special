@@ -9,7 +9,7 @@ export default async function registerCsvAsTable(): Promise<void> {
 	const importCsvDialog = await dialogs.create('importCsvDialog');
 	await dialogs.setHtml(importCsvDialog, `
 		<form name="hiddenForm" id="hiddenForm">
-			<input type="hidden" name="hiddenInput" id="hiddenInput">
+			<input style={ border: '2px solid lightblue', borderRadius: '5px' } type="hidden" name="hiddenInput" id="hiddenInput">
 		</form>
 		<label>Select CSV File: </label>
 		<input id="importCsvAsTable" onChange="importCsv(this)" type="file" accept=".csv" />
