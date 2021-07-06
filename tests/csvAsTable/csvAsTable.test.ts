@@ -1,5 +1,11 @@
 import csvAsTable from '../../src/utils/csvAsTable/csvAsTable';
 
+test('check if default export returns expected output #0', async () => {
+  let testCase = "";
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("|     | \n| --- | ");
+});
+
 test('check if default export returns expected output #1', async () => {
   let testCase = 'abc,bcd,cde';
   const result = await csvAsTable(testCase);
@@ -35,3 +41,16 @@ test('check if default export returns expected output #6', async () => {
   const result = await csvAsTable(testCase);
   expect(result).toBe("| A | b | c | \n| --- | --- | --- | \n| Cod | ef | f | \n| de f |  g | ");
 });
+
+test('check if default export returns expected output #7', async () => {
+  let testCase = "a;b;c;long value\nd;e;f";
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("| a | b | c | long value | \n| --- | --- | --- | --- | \n| d | e | f | ");
+});
+
+test('check if default export returns expected output #8', async () => {
+  let testCase = '"a|b|c|d",e\\f\\g';
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("| abcd | efg | \n| --- | --- | ");
+});
+

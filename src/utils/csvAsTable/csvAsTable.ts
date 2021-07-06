@@ -12,8 +12,8 @@ const parseCsv = async (csv: string) => {
 			console.info("PapaParse err: ", err[0]?.message);
 		}
 	});
-	
-	return parsedCsv;
+	console.info(parsedCsv);
+	return parsedCsv; 
 }
 
 const csvToMarkdown = (parsedCsv: any[]): string => {
@@ -24,9 +24,16 @@ const csvToMarkdown = (parsedCsv: any[]): string => {
 		});
 	})
 
+	let mdTable: string;
+
+	// for empty csv input
+	if(!parsedCsv.length) {
+		mdTable = `| ${["   "].map(_ => "   ")} | \n| --- | `;
+		return mdTable;
+	}
+
 	const header = parsedCsv[0];
 	const rows = parsedCsv.slice(1);
-	let mdTable: string;
 
 	mdTable = `| ${header.join(" | ")} | `;
 	mdTable = mdTable.concat(`\n| ${header.map(_ => "---").join(" | ")} | `);
