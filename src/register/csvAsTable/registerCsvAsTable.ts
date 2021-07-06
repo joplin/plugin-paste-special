@@ -1,9 +1,31 @@
 import joplin from 'api';
 import { MenuItemLocation } from 'api/types';
-import csvAsTable from '../utils/csvAsTable/csvAsTable';
+import csvAsTable from '../../utils/csvAsTable/csvAsTable';
 
 export default async function registerCsvAsTable(): Promise<void> {
-    // Respective command for main button
+
+	// Import CSV Dialog Configuration
+	const dialogs = joplin.views.dialogs;
+	const importCsvDialog = await dialogs.create('importCsvDialog');
+	await dialogs.setHtml(importCsvDialog, `
+		<form name="hiddenForm" id="hiddenForm">
+			<input type="hidden" name="hiddenInput" id="hiddenInput">
+		</form>
+		<label>Select CSV File: </label>
+		<input id="importCsvAsTable" onChange="importCsv(this)" type="file" accept=".csv" />
+	`);
+	await dialogs.setButtons(importCsvDialog, [
+		{
+			id: 'ok',
+		},
+		{
+			id: 'cancel',
+		},
+	]);
+	await dialogs.addScript(importCsvDialog, './register/csvAsTable/importCsv.js');
+	
+
+    // Respective command for button
 		await joplin.commands.register({
             name: 'pasteCsvAsTable',
             label: 'CSV as Table',
@@ -21,7 +43,8 @@ export default async function registerCsvAsTable(): Promise<void> {
             name: 'importCsvAsTable',
             label: 'CSV as Table',
             execute: async () => {
-				const csv =`CONTENT TYPE,TITLE,ABBR,ISSN,e-ISSN\nJournals,ACM Computing Surveys ,ACM Comput. Surv.,0360-0300,1557-7341\nJournals,ACM Journal of Computer Documentation ,ACM J. Comput. Doc.,1527-6805,1557-9441\nJournals,ACM Journal on Emerging Technologies in Computing Systems ,J. Emerg. Technol. Comput. Syst.,1550-4832,1550-4840\nJournals,Journal of Data and Information Quality ,J. Data and Information Quality,1936-1955,1936-1963`;
+				let data = await dialogs.open(importCsvDialog);
+				const csv = data.formData.hiddenForm.hiddenInput;
 				const importCsvAsTable = await csvAsTable(csv);
 				await joplin.commands.execute("insertText", importCsvAsTable);
 				await joplin.commands.execute('editor.focus');
