@@ -12,7 +12,6 @@ const parseCsv = async (csv: string) => {
 			console.info("PapaParse err: ", err[0]?.message);
 		}
 	});
-	console.info(parsedCsv);
 	return parsedCsv; 
 }
 
