@@ -48,7 +48,7 @@ test('it should use delimiter as `;`', async () => {
   expect(result).toBe("| a | b | c | long value | \n| --- | --- | --- | --- | \n| d | e | f | ");
 });
 
-test('it should return expected output by removing backslashes and pipes', async () => {
+test('it should return expected output by removing backslashes and pipes only', async () => {
   let testCase = '"a|b|c|d",e\\f\\g';
   const result = await csvAsTable(testCase);
   expect(result).toBe("| abcd | efg | \n| --- | --- | ");
@@ -58,4 +58,16 @@ test('it should expect to convert also empty cells', async () => {
   let testCase = 'foo,bar,baz\na#,"b",c\nd,e,\n,f,\n,,\ng,h,i';
   const result = await csvAsTable(testCase);
   expect(result).toBe("| foo | bar | baz | \n| --- | --- | --- | \n| a# | b | c | \n| d | e |  | \n|  | f |  | \n|  |  |  | \n| g | h | i | ");
+});
+
+test('it should expect to convert data properly in table', async () => {
+  let testCase = 'Login email;Identifier;One-time password;Recovery code;First name;Last name;Department;Location\nrachel@example.com;9012;12se74;rb9012;Rachel;Booker;Sales;Manchester\nlaura@example.com;2070;04ap67;lg2070;Laura;Grey;Depot;London';
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("| Login email | Identifier | One-time password | Recovery code | First name | Last name | Department | Location | \n| --- | --- | --- | --- | --- | --- | --- | --- | \n| rachel@example.com | 9012 | 12se74 | rb9012 | Rachel | Booker | Sales | Manchester | \n| laura@example.com | 2070 | 04ap67 | lg2070 | Laura | Grey | Depot | London | " );
+});
+
+test('it should return expected output by removing backslashes and pipes only', async () => {
+  let testCase = 'a\t,b|\t,c|\,\t,\\';
+  const result = await csvAsTable(testCase);
+  expect(result).toBe("| a\t | b\t | c | \t |  | \n| --- | --- | --- | --- | --- | ");
 });
