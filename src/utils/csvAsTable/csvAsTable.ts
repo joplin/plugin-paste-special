@@ -19,7 +19,7 @@ const csvToMarkdown = (parsedCsv: any[]): string => {
 	// remove pipes and backslashes
 	parsedCsv.forEach((rows, i) => {
 		rows.forEach((e,j) => {
-			parsedCsv[i][j] = e.replace(/[|]|\\(?!t)/g,'');
+			parsedCsv[i][j] = e.replace(/[|]|\\(?!t|r|n)/g,'');
 		});
 	})
 
