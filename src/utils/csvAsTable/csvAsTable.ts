@@ -16,16 +16,16 @@ const parseCsv = async (csv: string) => {
 }
 
 const csvToMarkdown = (parsedCsv: any[]): string => {
-	// remove pipes and backslashes
+	// handles pipes and backslashes and nul characters
 	parsedCsv.forEach((rows, i) => {
 		rows.forEach((e,j) => {
-			parsedCsv[i][j] = e.replace(/[|]|\\(?!t|r|n)/g,'');
+			parsedCsv[i][j] = e.replace(/[|]|[\\]/g, "\\$&");
 		});
-	})
+	});
 
 	let mdTable: string;
 
-	// for empty csv input
+	// for empty/null csv input
 	if(!parsedCsv.length) {
 		mdTable = `| ${["   "].map(_ => "   ")} | \n| --- | `;
 		return mdTable;
